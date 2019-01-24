@@ -86,4 +86,17 @@ trait ValidatorTrait
             throw new InvalidArgumentException(sprintf('%s is an invalid topic name.', $topic));
         }
     }
+
+    /**
+     * @param string $json
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function isValidJson(string $json): void
+    {
+        json_decode($json);
+        if (json_last_error() != JSON_ERROR_NONE) {
+            throw new InvalidArgumentException(sprintf('%s is not a valid JSON string.', $json));
+        }
+    }
 }

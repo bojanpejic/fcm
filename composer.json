@@ -1,5 +1,5 @@
 {
-  "name": "kerox/fcm",
+  "name": "bojanpejic/fcm",
   "type": "library",
   "description": "A PHP library to send push notification through Firebase Cloud Messaging",
   "keywords": [
@@ -8,7 +8,7 @@
     "notification",
     "firebase cloud messaging"
   ],
-  "homepage": "https://github.com/ker0x/fcm",
+  "homepage": "https://github.com/bojanpejic/fcm",
   "license": "MIT",
   "authors": [
     {
