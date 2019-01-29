@@ -74,10 +74,10 @@ class Message implements \JsonSerializable
 
         if ($message instanceof Notification) {
             $this->notification = $message;
+        } else {
+            $this->isValidJson($message);
+            $this->setData($message);
         }
-
-        $this->isValidJson($message);
-        $this->setData($message);
     }
 
     /**
