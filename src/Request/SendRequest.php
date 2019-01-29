@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Kerox\Fcm\Request;
 
+use Kerox\Fcm\Model\Message;
+
 /**
  * Class SendRequest.
  */
@@ -19,7 +21,7 @@ class SendRequest extends AbstractRequest
      */
     protected $validateOnly;
 
-    public function __construct(string $oauthToken, $message, bool $validateOnly)
+    public function __construct(string $oauthToken, Message $message, bool $validateOnly)
     {
         parent::__construct($oauthToken);
 
@@ -36,7 +38,7 @@ class SendRequest extends AbstractRequest
     {
         $body = [
             'validate_only' => $this->validateOnly,
-            'message' => $this->message,
+            'message' => $this->message->jsonSerialize(),
         ];
 
         return array_filter($body);

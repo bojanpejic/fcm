@@ -77,7 +77,7 @@ class Message implements \JsonSerializable
         }
 
         $this->isValidJson($message);
-        $this->setData(json_decode($message, true));
+        $this->setData($message);
     }
 
     /**
