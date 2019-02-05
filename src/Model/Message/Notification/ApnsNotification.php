@@ -77,13 +77,13 @@ class ApnsNotification implements JsonSerializable
     }
 
     /**
-     * @param bool $badge
+     * @param int $badge
      *
      * @return \Kerox\Fcm\Model\Message\Notification\ApnsNotification
      */
-    public function setBadge(bool $badge): self
+    public function setBadge(int $badge): self
     {
-        $this->badge = (int) $badge;
+        $this->badge = $badge;
 
         return $this;
     }
