@@ -125,7 +125,7 @@ class Message implements \JsonSerializable
      */
     public function setApns(Apns $apns): self
     {
-        $this->apns = $apns;
+        $this->apns = $apns->toArray();
 
         return $this;
     }
