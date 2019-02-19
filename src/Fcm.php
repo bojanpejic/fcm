@@ -7,6 +7,7 @@ namespace Kerox\Fcm;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Kerox\Fcm\Api\Send;
+use Kerox\Fcm\Api\SendLog;
 
 /**
  * Class Fcm.
@@ -54,5 +55,10 @@ class Fcm
     public function send(): Send
     {
         return new Send($this->oauthToken, $this->projectId, $this->client);
+    }
+
+    public function sendLog($logger): SendLog
+    {
+        return new SendLog($this->oauthToken, $this->projectId, $this->client, $logger);
     }
 }
