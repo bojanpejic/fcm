@@ -9,7 +9,7 @@ namespace Kerox\Fcm\Response;
  */
 class SendResponse extends AbstractResponse
 {
-    public const ERROR_KEY = 'error_code';
+    public const ERROR_KEY = 'errorCode';
     public const MESSAGE_KEY = 'name';
 
     public const ERROR_UNSPECIFIED_ERROR = 'UNSPECIFIED_ERROR';
@@ -25,7 +25,7 @@ class SendResponse extends AbstractResponse
         self::ERROR_UNSPECIFIED_ERROR => 'No more information is available about this error.',
         self::ERROR_INVALID_ARGUMENT => 'Request parameters were invalid. An extension of type google.rpc.BadRequest is returned to specify which field was invalid.',
         self::ERROR_UNREGISTERED => 'App instance was unregistered from FCM. This usually means that the token used is no longer valid and a new one must be used.',
-        self::ERROR_SENDER_ID_MISMATCH => '	The authenticated sender ID is different from the sender ID for the registration token.',
+        self::ERROR_SENDER_ID_MISMATCH => ' The authenticated sender ID is different from the sender ID for the registration token.',
         self::ERROR_QUOTA_EXCEEDED => 'Sending limit exceeded for the message target. An extension of type google.rpc.QuotaFailure is returned to specify which quota got exceeded.',
         self::ERROR_APNS_AUTH_ERROR => 'APNs certificate or auth key was invalid or missing.',
         self::ERROR_UNAVAILABLE => 'The server is overloaded.',
@@ -104,9 +104,10 @@ class SendResponse extends AbstractResponse
     {
         $this->name = $response[self::MESSAGE_KEY] ?? null;
 
-        if (isset($response[self::ERROR_KEY])) {
-            $this->errorCode = $response[self::ERROR_KEY];
-            $this->errorMessage = self::ERROR_MESSAGE[$response[self::ERROR_KEY]] ?? null;
+        if (isset($response['error'])) {
+            $errorDetails = array_pop($response['error']['details']);
+            $this->errorCode = $errorDetails[self::ERROR_KEY];
+            $this->errorMessage = self::ERROR_MESSAGE[$this->errorCode] ?? null;
         }
     }
 }

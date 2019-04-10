@@ -7,6 +7,8 @@ namespace Kerox\Fcm\Api;
 use Kerox\Fcm\Model\Message;
 use Kerox\Fcm\Request\SendRequest;
 use Kerox\Fcm\Response\SendResponse;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class Send.
@@ -34,7 +36,14 @@ class SendLog extends AbstractApi
         $request = new SendRequest($this->oauthToken, $message, $validateOnly);
         $build = $request->build();
         $this->logger->log('Request Payload: '.json_encode($build));
-        $response = $this->client->post($uri, $build);
+        try {
+            $response = $this->client->post($uri, $build);
+        } catch (RequestException $e) {
+            $errorResponse = $e->getResponse();
+            $response = new Response(
+                $errorResponse->getStatusCode(), $errorResponse->getHeaders(), $errorResponse->getBody()
+            );
+        }
 
         return new SendResponse($response);
     }
