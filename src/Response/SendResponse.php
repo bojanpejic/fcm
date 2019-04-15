@@ -105,8 +105,14 @@ class SendResponse extends AbstractResponse
         $this->name = $response[self::MESSAGE_KEY] ?? null;
 
         if (isset($response['error'])) {
-            $errorDetails = array_pop($response['error']['details']);
-            $this->errorCode = $errorDetails[self::ERROR_KEY];
+
+            $this->errorCode = $response['error']['message'];
+
+            if (isset($response['error']['details'])) {
+                $errorDetails = array_pop($response['error']['details']);
+                $this->errorCode = $errorDetails[self::ERROR_KEY];
+            }
+
             $this->errorMessage = self::ERROR_MESSAGE[$this->errorCode] ?? null;
         }
     }
