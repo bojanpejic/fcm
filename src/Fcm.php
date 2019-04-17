@@ -52,6 +52,11 @@ class Fcm
         $this->client = $client;
     }
 
+    public function getOauthToken(): string
+    {
+        return $this->oauthToken;
+    }
+
     public function send(): Send
     {
         return new Send($this->oauthToken, $this->projectId, $this->client);
