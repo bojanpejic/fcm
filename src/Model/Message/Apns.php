@@ -22,6 +22,11 @@ class Apns implements \JsonSerializable
     protected $payload;
 
     /**
+     * @var array
+     */
+    protected $fcmOptions = [];
+
+    /**
      * @param array $headers
      *
      * @return \Kerox\Fcm\Model\Message\Apns
@@ -47,6 +52,15 @@ class Apns implements \JsonSerializable
         return $this;
     }
 
+    public function setFcmOptions(array $fcmOptions): self
+    {
+        $this->isValidData($fcmOptions);
+
+        $this->fcmOptions = $fcmOptions;
+
+        return $this;
+    }
+
     /**
      * @return array
      */
@@ -56,6 +70,10 @@ class Apns implements \JsonSerializable
             'headers' => $this->headers,
             'payload' => $this->payload,
         ];
+
+        if (! empty($this->fcmOptions)) {
+            $array['fcm_options'] = $this->fcmOptions;
+        }
 
         return array_filter($array);
     }
