@@ -20,6 +20,7 @@ class SendResponse extends AbstractResponse
     public const ERROR_APNS_AUTH_ERROR = 'APNS_AUTH_ERROR';
     public const ERROR_UNAVAILABLE = 'UNAVAILABLE';
     public const ERROR_INTERNAL = 'INTERNAL';
+    public const NOT_FOUND = 'NOT_FOUND';
 
     public const ERROR_MESSAGE = [
         self::ERROR_UNSPECIFIED_ERROR => 'No more information is available about this error.',
@@ -30,6 +31,7 @@ class SendResponse extends AbstractResponse
         self::ERROR_APNS_AUTH_ERROR => 'APNs certificate or auth key was invalid or missing.',
         self::ERROR_UNAVAILABLE => 'The server is overloaded.',
         self::ERROR_INTERNAL => 'An unknown internal error occurred.',
+        self::NOT_FOUND => 'Requested entity was not found.',
     ];
 
     /**
@@ -104,16 +106,9 @@ class SendResponse extends AbstractResponse
     {
         $this->name = $response[self::MESSAGE_KEY] ?? null;
 
-        if (isset($response['error'])) {
-
-            $this->errorCode = $response['error']['message'];
-
-            if (isset($response['error']['details'])) {
-                $errorDetails = array_pop($response['error']['details']);
-                $this->errorCode = $errorDetails[self::ERROR_KEY];
-            }
-
-            $this->errorMessage = self::ERROR_MESSAGE[$this->errorCode] ?? null;
+        if (isset($response[self::ERROR_KEY])) {
+            $this->errorCode = $response[self::ERROR_KEY];
+            $this->errorMessage = self::ERROR_MESSAGE[$response[self::ERROR_KEY]] ?? null;
         }
     }
 }
